@@ -1,0 +1,172 @@
+{
+  "measurement": "timing-v1",
+  "session_dir": "<REDACTED_PATH>",
+  "clock_domains": [
+    "public-clock"
+  ],
+  "time_source": "timing.recorder_receive (server handler ingress, Processing Time); fallback event timestamp_monotonic",
+  "trace_gate": {
+    "validated": true,
+    "reason": null,
+    "report": {
+      "session_id": "public-session-001",
+      "canonical_events": 2712,
+      "media_events": 2687,
+      "roles": [
+        "avatar_playback_audio",
+        "avatar_video",
+        "camera",
+        "microphone",
+        "tts_audio",
+        "vad_audio"
+      ]
+    }
+  },
+  "usable_for_experiments": true,
+  "turns": [
+    {
+      "turn_index": 0,
+      "latency_ms": {
+        "asr": 1316.778,
+        "vad_to_decision": null,
+        "llm_first_token": 2094.057,
+        "tts_first_audio": 919.971,
+        "server_pipeline": 4346.077,
+        "interrupt_decision": null,
+        "avatar_generation": 219.424,
+        "server_pipeline_to_first_frame": 4565.502,
+        "avatar_playback_duration": 28198.052
+      },
+      "anchors": {
+        "user_speech_start": 3722562.044981344,
+        "user_speech_end": 3722563.649611507,
+        "user_voicing_onset": null,
+        "vad_stop": null,
+        "final_text": 3722564.966389247,
+        "avatar_text_first": 3722567.060446731,
+        "tts_first_audio": 3722567.98041791,
+        "avatar_speech_start": 3722567.995688906,
+        "avatar_speech_end": 3722596.193740528,
+        "interrupt": null,
+        "avatar_first_frame": 3722568.215113238
+      },
+      "truncated": false,
+      "notes": [
+        "vad_stop missing; asr falls back to UserSpeechEnd"
+      ]
+    }
+  ],
+  "aggregate_latency_ms": {
+    "asr": {
+      "n": 1,
+      "mean": 1316.778,
+      "median": 1316.778,
+      "p95": 1316.778,
+      "min": 1316.778,
+      "max": 1316.778,
+      "missing_turns": 0
+    },
+    "avatar_generation": {
+      "n": 1,
+      "mean": 219.424,
+      "median": 219.424,
+      "p95": 219.424,
+      "min": 219.424,
+      "max": 219.424,
+      "missing_turns": 0
+    },
+    "avatar_playback_duration": {
+      "n": 1,
+      "mean": 28198.052,
+      "median": 28198.052,
+      "p95": 28198.052,
+      "min": 28198.052,
+      "max": 28198.052,
+      "missing_turns": 0
+    },
+    "interrupt_decision": null,
+    "llm_first_token": {
+      "n": 1,
+      "mean": 2094.057,
+      "median": 2094.057,
+      "p95": 2094.057,
+      "min": 2094.057,
+      "max": 2094.057,
+      "missing_turns": 0
+    },
+    "server_pipeline": {
+      "n": 1,
+      "mean": 4346.077,
+      "median": 4346.077,
+      "p95": 4346.077,
+      "min": 4346.077,
+      "max": 4346.077,
+      "missing_turns": 0
+    },
+    "server_pipeline_to_first_frame": {
+      "n": 1,
+      "mean": 4565.502,
+      "median": 4565.502,
+      "p95": 4565.502,
+      "min": 4565.502,
+      "max": 4565.502,
+      "missing_turns": 0
+    },
+    "tts_first_audio": {
+      "n": 1,
+      "mean": 919.971,
+      "median": 919.971,
+      "p95": 919.971,
+      "min": 919.971,
+      "max": 919.971,
+      "missing_turns": 0
+    },
+    "vad_to_decision": null
+  },
+  "baseline_model_latency_ms": {
+    "shadow:random_eou": {
+      "n": 2,
+      "mean": 0.007,
+      "median": 0.01,
+      "p95": 0.01,
+      "min": 0.003,
+      "max": 0.01
+    },
+    "replay:random_eou": {
+      "n": 2,
+      "mean": 0.011,
+      "median": 0.019,
+      "p95": 0.019,
+      "min": 0.003,
+      "max": 0.019
+    }
+  },
+  "client_side": {
+    "record_count": 0,
+    "clock_domains": {},
+    "same_domain_latency_ms": {},
+    "suppressed": [],
+    "malformed_records": 0,
+    "notes": [
+      "epoch_ms values are browser-domain timestamps and are stored verbatim",
+      "server_received_monotonic is receipt metadata and is never subtracted from a browser epoch",
+      "receive_to_playback is computed only within one browser clock_domain"
+    ]
+  },
+  "missing_timestamps": [
+    "user_capture",
+    "server_ingress",
+    "baseline_input_runtime",
+    "client_receive",
+    "client_audio_playback",
+    "client_frame_render"
+  ],
+  "notes": [
+    "server_pipeline / server_pipeline_to_first_frame 是服务端代理指标，不是 end-to-end perceived latency（需客户端播放时间戳）",
+    "avatar_generation 以 AvatarSpeechStart(CLIENT_PLAYBACK 开始)为生成请求锚点，首个响应帧因 idle 帧持续流动而是近似值",
+    "interrupt_decision 仅双工抢话轮存在",
+    "vad_to_decision uses FinalText as the closest available commit/decision anchor in this OpenAvatarChat trace",
+    "user_voicing_onset_monotonic_estimated is back-calculated from the VAD sample position and carries the *_estimated suffix",
+    "negative per-turn latency values are exported as null and counted as missing"
+  ]
+}

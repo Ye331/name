@@ -1,0 +1,30 @@
+{
+  "format": "media-trace-v2",
+  "session_id": "public-session-001",
+  "finalized": true,
+  "complete": true,
+  "losses": {},
+  "media_event_counts": {
+    "USER_AUDIO_CHUNK": 711,
+    "USER_VIDEO_FRAME": 1132,
+    "AVATAR_AUDIO_CHUNK": 708,
+    "AVATAR_FRAME": 136
+  },
+  "static_assets": [],
+  "event_files": {
+    "raw": {
+      "sha256": "330fbd623e77286dd5cd17c052dbdba02c483be09329c6de674b8592cc6e6338",
+      "size_bytes": 2134035
+    },
+    "canonical": {
+      "sha256": "ff28f3b4f0a2a7ebd5e443952e7abebf863c194f2b728076fcfbd9d2d2eab1db",
+      "size_bytes": 2174029
+    }
+  },
+  "references": "canonical_events.jsonl (media payloads removed in public-safe copy)",
+  "recorded_modalities": [],
+  "completeness_scope": "accepted subscriptions only; consumers must check required modalities",
+  "timestamp_source": "handler ingress; upstream transport/dispatch delay unknown",
+  "recording_policy": "public-safe; raw media, text, wall-clock timestamps, host paths, and runtime identifiers redacted",
+  "media_stripped": true
+}

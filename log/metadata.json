@@ -1,0 +1,138 @@
+{
+  "research_layer": {
+    "phase": 4,
+    "logger_version": "phase4-1.2.0",
+    "notes": [
+      "CLIENT_PLAYBACK is a backend lifecycle signal, not browser audible/visible playback; ClientAudioPlayback and ClientFrameRender are unavailable",
+      "TTS_FIRST_AUDIO may include idle audio for an unknown avatar producer; configured avatar producers are excluded, historical traces may still be affected",
+      "P4 raw media is stored losslessly as npy records in segmented packs; microphone and VAD audio are distinct roles, do not concatenate them as one user audio stream",
+      "server ingress and user capture are unavailable; handler receive and engine timestamps are separate clock domains and include upstream delays",
+      "timestamps are logger-receive times (monotonic + wall) and include engine signal/data queue dispatch delay",
+      "AVATAR_FIRST_FRAME is approximate: avatar idle frames flow continuously from session start; the logged anchor is the first AVATAR_VIDEO frame after CLIENT_PLAYBACK began",
+      "client textbox input is also recorded as FINAL_ASR; distinguish it from ASR output via payload.producer",
+      "PARTIAL_ASR only appears when a streaming ASR is configured; the default SenseVoice emits a single FINAL_ASR package"
+    ]
+  },
+  "oac": {
+    "commit": "1a9da6e2a11e932dbead8aad47f8829fe68a871f",
+    "research_commit": "1a9da6e2a11e932dbead8aad47f8829fe68a871f",
+    "config_file": "config/chat_with_openai_compatible_bailian_cosyvoice_duplex.yaml"
+  },
+  "handlers": {
+    "RtcClient": {
+      "module": "client/rtc_client/client_handler_rtc",
+      "enabled": true
+    },
+    "InterruptHandler": {
+      "module": "logic/interrupt/interrupt_handler",
+      "enabled": true
+    },
+    "SileroVad": {
+      "module": "vad/silerovad/duplex_vad_handler",
+      "enabled": true
+    },
+    "SenseVoice": {
+      "module": "asr/sensevoice/asr_handler_sensevoice",
+      "enabled": true
+    },
+    "SmartTurnEOU": {
+      "module": "vad/smart_turn_eou/eou_handler_smart_turn",
+      "enabled": true
+    },
+    "SemanticTurnDetector": {
+      "module": "llm/semantic_turn_detector/semantic_turn_detector_handler",
+      "enabled": true
+    },
+    "CosyVoice": {
+      "module": "tts/bailian_tts/tts_handler_cosyvoice_bailian",
+      "enabled": true
+    },
+    "LLMOpenAICompatible": {
+      "module": "llm/openai_compatible/llm_handler_openai_compatible",
+      "enabled": true
+    },
+    "LiteAvatar": {
+      "module": "avatar/liteavatar/avatar_handler_liteavatar",
+      "enabled": true
+    },
+    "ResearchEventLogger": {
+      "module": "research_capture/research_event_logger",
+      "enabled": true
+    }
+  },
+  "os": "Linux-5.4.0-120-generic-x86_64-with-glibc2.28",
+  "python": "3.11.16",
+  "gpu": {
+    "available": true,
+    "torch_version": "2.8.0+cu128",
+    "devices": [
+      "<REDACTED_GPU>"
+    ]
+  },
+  "provenance": {
+    "commit": "1a9da6e2a11e932dbead8aad47f8829fe68a871f",
+    "dirty": true,
+    "source_snapshot": "<REDACTED_PATH>",
+    "source_sha256": "93dd38f3305228b94c26e2c7582d604bc7510818bd086f3d6d9ce8072c442684",
+    "source_scope": [
+      "src/**/*.py",
+      "research/**/*.py",
+      "pyproject.toml",
+      "uv.lock",
+      "plan.md"
+    ],
+    "config_snapshot": "<REDACTED_PATH>",
+    "config_sha256": "a94c020264760e99b92e8dfe8f97887b25ffc7f5e244b36b171cd8c859cd478e",
+    "credentials": "redacted; provide credentials separately",
+    "snapshot_boundary": "handler_load; restart service after code/config changes",
+    "model_weights": "not snapshotted; no research baseline loaded in P4",
+    "recorder_config": "<REDACTED_PATH>",
+    "recorder_config_sha256": "ccfc78e19de7880db1a48778baea11b28525910d872ad9af1870fd9ffdc1bfb8"
+  },
+  "record_media": true,
+  "media_policy": {
+    "media_roles": null,
+    "avatar_video_sample_stride": 5
+  },
+  "session_id": "public-session-001",
+  "session_start_wall": null,
+  "clock_domain": "public-clock",
+  "bridge_version": "phase4-1.0.0",
+  "event_counts": {
+    "USER_AUDIO_CHUNK": 711,
+    "STREAM_BEGIN": 5,
+    "USER_VIDEO_FRAME": 1132,
+    "AVATAR_AUDIO_CHUNK": 708,
+    "AVATAR_PLAYBACK_AUDIO_START": 1,
+    "AVATAR_FRAME": 136,
+    "USER_SPEECH_START": 1,
+    "USER_SPEECH_END": 2,
+    "FINAL_ASR": 2,
+    "STREAM_END": 4,
+    "AVATAR_TEXT_CHUNK": 13,
+    "AVATAR_TEXT_START": 1,
+    "TTS_FIRST_AUDIO": 1,
+    "AVATAR_SPEECH_START": 1,
+    "AVATAR_FIRST_FRAME": 1,
+    "AVATAR_SPEECH_END": 1
+  },
+  "dropped_events": 0,
+  "losses": {},
+  "loss_examples": [],
+  "loss_examples_truncated": false,
+  "finalized": true,
+  "complete": true,
+  "recorder_diagnostics": {
+    "max_pending_media_bytes": 7896960,
+    "max_writer_lag_s": 0.06250314367935061,
+    "storage": "npy-pack-v1",
+    "flush_interval_s": 0.25
+  },
+  "output_files": {
+    "events": "events.jsonl",
+    "metadata": "metadata.json",
+    "trace": "trace/canonical_events.jsonl"
+  },
+  "session_end_wall": null,
+  "session_duration_s": 40.7918383940123
+}

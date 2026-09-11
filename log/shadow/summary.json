@@ -1,0 +1,19 @@
+{
+  "session_dir": "<REDACTED_PATH>",
+  "baselines": [
+    "random_eou"
+  ],
+  "turns_observed": 2,
+  "turns_dispatched": 2,
+  "predictions": 2,
+  "errors": [],
+  "trace_gate": {
+    "finalized": true,
+    "complete": true,
+    "losses": {},
+    "validated": true,
+    "reason": null
+  },
+  "usable_for_experiments": true,
+  "note": "shadow predictions never affect the engine; lossy/incomplete traces are debug-only per integrity policy"
+}
